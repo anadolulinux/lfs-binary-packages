@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
 name="gtksourceview4"
 version="4.8.4"
-_version="4.8"
 description="A text widget adding syntax highlighting and more to GNOME"
-source="https://download.gnome.org/sources/gtksourceview/${_version}/gtksourceview-${version}.tar.xz"
+source="https://download.gnome.org/sources/gtksourceview/${version%.*}/gtksourceview-${version}.tar.xz"
 depends="gtk3,libxml2,gobject-introspection"
 group="x11.libs"
 

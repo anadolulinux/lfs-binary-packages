@@ -1,15 +1,13 @@
 #!/usr/bin/env bash
 name="libnotify"
 version="0.8.2"
-_version="0.8"
 description="Library for sending desktop notifications"
-source="https://download.gnome.org/sources/libnotify/${_version}/libnotify-${version}.tar.xz"
+source="https://download.gnome.org/sources/libnotify/${version%.*}/libnotify-${version}.tar.xz"
 depends=()
 group="x11.libs"
 
-
 setup(){
-		cd $SOURCEDIR
+	cd $SOURCEDIR
     meson setup $BUILDDIR --prefix=/usr \
         --libdir=/usr/lib64/ \
         -Dgtk_doc=false     \

@@ -3,11 +3,8 @@ name="libxkbcommon"
 version="1.6.0"
 description="keymap handling library for toolkits and window systems"
 source="https://github.com/xkbcommon/libxkbcommon/archive/refs/tags/xkbcommon-$version.tar.gz"
-depends="libxml2,libxcb,xkeyboard-config"
+depends="libxml2,libxcb,xkeyboard-config,wayland-protocols,wayland"
 group="x11.libs"
-wayland_depends="wayland-protocols,wayland"
-
-#cd libxkbcommon-xkbcommon-$version
 
 setup(){
 cd $SOURCEDIR

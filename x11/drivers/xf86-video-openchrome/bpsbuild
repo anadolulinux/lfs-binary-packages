@@ -6,9 +6,6 @@ source="https://salsa.debian.org/xorg-team/driver/xserver-xorg-video-openchrome/
 depends="libXvMC"
 group="x11.drivers"
 
-_name="xserver-xorg-video-openchrome"
-_version="1_$version-5"
-
 setup(){
 	cd $SOURCEDIR
 	./autogen.sh
