@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
-name='llvm'
-release='1'
-version='17.0.6'
-url='https://llvm.org'
-description='Low Level Virtual Machine'
+name="llvm"
+release="1"
+version="17.0.6"
+url="https://llvm.org"
+description="Low Level Virtual Machine"
 source="https://github.com/llvm/llvm-project/releases/download/llvmorg-$version/llvm-$version.src.tar.xz"
 
 depends="libffi,xz-utils,libxml2,zlib"
@@ -37,7 +37,6 @@ setup(){
 	
     busybox wget https://github.com/llvm/llvm-project/releases/download/llvmorg-$version/cmake-$version.src.tar.xz
     busybox wget https://github.com/llvm/llvm-project/releases/download/llvmorg-$version/third-party-$version.src.tar.xz
-    #busybox wget https://anduin.linuxfromscratch.org/BLFS/llvm/llvm-third-party.src.tar.xz
     tar -xf cmake-$version.src.tar.xz
     tar -xf third-party-$version.src.tar.xz
     cd $SOURCEDIR
@@ -48,6 +47,9 @@ setup(){
    
     cd build
     cmake .. ${cmake_args[@]}
+
+    python ../utils/lit/setup.py build
+
 }
 
 build(){
@@ -56,5 +58,7 @@ build(){
 
 package(){
     DESTDIR=$DESTDIR ninja install
-    #mv ${DESTDIR}/usr/lib{,64}
+    
+    python ../utils/lit/setup.py install --root="$DESTDIR"
+    
 }
