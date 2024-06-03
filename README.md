@@ -1,2 +1,2 @@
 # bps-source-packages
-Anadolu Lİnux kaynak paketleri.
+Anadolu Linux kaynak paketleri.
