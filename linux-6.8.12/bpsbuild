@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+name="linux"
+version="6.8.12"
+description="Linux kernel"
+source="https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-$version.tar.xz"
+depends=""
+builddepend="bc,cpio,gettext,elfutils,pahole,perl,python,tar,xz-utils"
+group="sys.kernel"
+
+setup(){
+
+	cp -prvf $PACKAGEDIR/files/ /tmp/bps/build/
+	cd $SOURCEDIR
+	
+	patch -Np1 -i ../files/patch-$version
+	cp ../files/config .config
+	#make tinyconfig
+	#make allmodconfig
+	make olddefconfig
+
+}
+build(){
+    make -j$(nproc)
+	make all
+}
+
+package(){
+	make bzImage
+	make INSTALL_PATH=$DESTDIR install
+	
+	mkdir -p $DESTDIR/boot
+	#make -s $name $DESTDIR/boot/bzImage
+	#make $(make -s $name | awk -F '/' '{print $4}')
+	
+	
+	make INSTALL_MOD_PATH=$DESTDIR modules_install INSTALL_MOD_STRIP=1 -j$(nproc)
+    make INSTALL_HDR_PATH=$DESTDIR headers_install
+    
+    install -Dm644 $DESTDIR/vmlinuz $DESTDIR/boot/vmlinuz-$version
+    mv -vf System.map $DESTDIR/boot/System.map-$version
+    cp -prvf ../files/config $DESTDIR/boot/config-$version
+}
