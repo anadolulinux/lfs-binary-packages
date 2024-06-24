@@ -22,10 +22,11 @@ setup(){
 build(){
     make -j$(nproc)
 	make all
+	make bzImage
 }
 
 package(){
-	make bzImage
+
 	make INSTALL_PATH=$DESTDIR install
 	
 	mkdir -p $DESTDIR/boot
@@ -34,9 +35,16 @@ package(){
 	
 	
 	make INSTALL_MOD_PATH=$DESTDIR modules_install INSTALL_MOD_STRIP=1 -j$(nproc)
-    make INSTALL_HDR_PATH=$DESTDIR headers_install
+    #make INSTALL_HDR_PATH=$DESTDIR headers_install
     
     install -Dm644 $DESTDIR/vmlinuz $DESTDIR/boot/vmlinuz-$version
     mv -vf System.map $DESTDIR/boot/System.map-$version
     cp -prvf ../files/config $DESTDIR/boot/config-$version
+    
+    #benim ilavelerim
+    rm $DESTDIR/vmlinuz
+    rm $DESTDIR/System.map
+    #rm $DESTDIR/boot/System.map-$version
+    find ${DESTDIR}/ -iname "*" -exec unxz {} \;
+    depmod -b "$DESTDIR" -F $DESTDIR/boot/System.map-6.8.12 6.8.12
 }
