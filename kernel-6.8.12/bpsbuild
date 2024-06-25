@@ -115,6 +115,7 @@ fi
 
     
     #------------------------------
+    mv -vf System.map $DESTDIR/boot/System.map-$version
     find ${DESTDIR}/ -iname "*" -exec unxz {} \;
     depmod -b "$DESTDIR" -F $DESTDIR/boot/System.map-$version $version
 }
