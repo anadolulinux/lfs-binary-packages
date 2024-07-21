@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-name="kernel"
+name="kernel-headers"
 version="6.9.9"
 description="Linux kernel"
 source="https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-$version.tar.xz"
